@@ -10,25 +10,24 @@ export const App = () => {
 
   return (
     <>
-    <Header/>
+      <Header/>
 
-    <main>
-    
-    <Hero/>
+      <main>
+      
+        <Hero/>
 
-    <Filter/>
+        <Filter/>
 
-    <Goods/>
+        <Goods/>
 
-    <Subscribe/>
-  </main>
+        <Subscribe/>
+      </main>
+      
+      <Footer/>
 
-  
-  <Footer/>
+      <Order/>
 
-  <Order/>
-
-  
-</>
+      
+    </>
   )
 }

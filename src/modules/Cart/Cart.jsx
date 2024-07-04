@@ -1,4 +1,4 @@
-import { Cartitem } from '../Cartitem/Cartitem';
+import { CartItem } from '../CartItem/CartItem';
 import './cart.scss'
 import {goodsArrayCart} from './goodsArrayCart'
 
@@ -23,7 +23,7 @@ export const Cart = () => (
 
             <ul className="cart__list">
               {goodsArrayCart.map((item) => (
-                <Cartitem {...item}/>
+                <CartItem key={item.id} {...item}/>
               ))}
               
             </ul>

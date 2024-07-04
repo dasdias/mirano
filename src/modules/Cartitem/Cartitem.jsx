@@ -1,8 +1,6 @@
-export const Cartitem = ({id, img, price, title}) => (
-  <li key={id} className="cart__item">
-    <img className="cart__img"
-      src={img}
-      alt={title} />
+export const CartItem = ({ img, price, title}) => (
+  <li className="cart__item">
+    <img className="cart__img" src={img} alt={title} />
     <h4 className="cart__item-title">{title}</h4>
     <div className="cart__counter"><button
         className="cart__counter-btn">-</button>
