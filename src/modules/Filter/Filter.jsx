@@ -9,13 +9,10 @@ export const Filter = () => (
         <fieldset className="filter__group">
           <input className="filter__radio" type="radio" name="type"
             value="bouquets" id="flower" defaultChecked />
-          <label className="filter__label filter__label_flower"
-            htmlFor="flower">Цветы</label>
+          <label className="filter__label filter__label_flower" htmlFor="flower">Цветы</label>
 
-          <input className="filter__radio" type="radio" name="type" value="toys"
-            id="toys" />
-          <label className="filter__label filter__label_toys"
-            htmlFor="toys">Игрушки</label>
+          <input className="filter__radio" type="radio" name="type" value="toys" id="toys" />
+          <label className="filter__label filter__label_toys" htmlFor="toys">Игрушки</label>
 
           <input className="filter__radio" type="radio" name="type"
             value="postcards" id="postcard" />
