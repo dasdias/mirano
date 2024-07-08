@@ -1,7 +1,14 @@
 import './filter.scss'
 import { Choices } from '../Choices/Choices'
+import { useState } from 'react'
 
-export const Filter = () => (
+export const Filter = () => {
+  const [openChoice, setOpenChoice] = useState(null)
+
+  const handleChoicesToggle = (index) => {
+    setOpenChoice( openChoice === index ? null : index )
+  }
+  return (
   <section className="filter">
     <h2 className="visually-hidden"></h2>
     <div className="container">
@@ -21,7 +28,7 @@ export const Filter = () => (
         </fieldset>
 
         <fieldset className="filter__group filter__group_choices">
-          <Choices bottonLabel="Цена">
+          <Choices bottonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>
               <fieldset className="filter__price">
                 <input className="filter__input-price" type="text" name="minPrice"
                   placeholder="от" />
@@ -30,7 +37,7 @@ export const Filter = () => (
               </fieldset>
           </Choices>
 
-          <Choices bottonLabel="Тип товара">
+          <Choices bottonLabel="Тип товара" isOpen={openChoice === 1} onToggle={() => handleChoicesToggle(1)}>
               <ul className="filter__type-list">
                 <li className="filter__type-item">
                   <button className="filter__type-button"
@@ -58,4 +65,4 @@ export const Filter = () => (
       </form>
     </div>
   </section>
-)
+)}

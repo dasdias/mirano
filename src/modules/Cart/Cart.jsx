@@ -1,20 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { CartItem } from '../CartItem/CartItem';
 import './cart.scss'
-import {goodsArrayCart} from './goodsArrayCart'
+// import {goodsArrayCart} from './goodsArrayCart'
 import { toggleCart } from '../../redux/cartSlice';
-import { toggleModal } from '../../redux/modalSlice';
+import { openModal } from '../../redux/orderSlice';
 
 export const Cart = () => {
-  const isOpen = useSelector((state) => state.cart.isOpen )
   const dispatch = useDispatch();
+  const isOpen = useSelector((state) => state.cart.isOpen )
+  const items = useSelector(state => state.cart.items)
 
   const handlerCartClose = () => {
     dispatch(toggleCart())
   }
 
-  const handlerModalClose = () => {
-    dispatch(toggleModal())
+const handlerOpenModal = (e) => {
+    e.stopPropagation();
+    dispatch(openModal())
   }
 
   if (!isOpen) return null;
@@ -39,14 +41,14 @@ export const Cart = () => {
             <p className="cart__date-delivery">сегодня в 14:00</p>
 
             <ul className="cart__list">
-              {goodsArrayCart.map((item) => (
+              {items.map((item) => (
                 <CartItem key={item.id} {...item}/>
               ))}
               
             </ul>
 
             <div className="cart__footer">
-              <button className="cart__order-btn" onClick={handlerModalClose}>Оформить</button>
+              <button className="cart__order-btn" onClick={handlerOpenModal}>Оформить</button>
               <p className="cart__price cart__price_total">0&nbsp;₽</p>
             </div>
           </div>

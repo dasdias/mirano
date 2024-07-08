@@ -1,17 +1,11 @@
 import classNames from 'classnames'
 import './choices.scss'
-import { useState } from 'react'
 
-export const Choices = ({children, bottonLabel, className}) => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const handleToggle = () => {
-    setIsOpen((oldIsOpen) => !oldIsOpen )
-  }
+export const Choices = ({children, bottonLabel, className, isOpen, onToggle}) => {
 
   return (
       <div className={classNames("choices", className)}>
-          <button className="choices__btn" type="button" onClick={handleToggle}>{bottonLabel}</button>
+          <button className="choices__btn" type="button" onClick={onToggle}>{bottonLabel}</button>
         {isOpen && <div className="choices__box">{children}</div>}
       </div>
     )
