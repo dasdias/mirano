@@ -4,11 +4,14 @@ import './cart.scss'
 import { toggleCart } from '../../redux/cartSlice';
 import { openModal } from '../../redux/orderSlice';
 import { CartItem } from '../CartItem/CartItem';
+import { useEffect, useRef } from 'react';
 
 export const Cart = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.cart.isOpen )
   const items = useSelector(state => state.cart.items)
+
+  const cartRef = useRef(null);
 
   const handlerCartClose = () => {
     dispatch(toggleCart())
@@ -19,10 +22,16 @@ const handlerOpenModal = (e) => {
     dispatch(openModal())
   }
 
+  useEffect(() => {
+    if (isOpen) {
+      cartRef.current.scrollIntoView({behavior: "smooth"})
+    }    
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-  <section className="cart cart_open">
+  <section className="cart cart_open" ref={cartRef}>
           <div className="cart__container">
             <div className="cart__header">
               <h3 className="cart__title">Ваш заказ</h3>
