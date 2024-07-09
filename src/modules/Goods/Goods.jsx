@@ -1,5 +1,4 @@
 import { Card } from "../Card/Card";
-// import { goodsArray } from "../../goodsArray";
 import { Cart } from "../Cart/Cart";
 import './goods.scss'
 import { useDispatch, useSelector } from "react-redux";
