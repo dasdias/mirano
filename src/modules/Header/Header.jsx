@@ -4,7 +4,6 @@ import { toggleCart } from '../../redux/cartSlice';
 
 export const Header = () => {
   const items = useSelector(state => state.cart.items)
-  console.log('items: ', items);
   
   const dispatch = useDispatch();
 
