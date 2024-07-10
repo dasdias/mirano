@@ -1,13 +1,14 @@
 import './filter.scss'
 import { Choices } from '../Choices/Choices'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchGoods } from '../../redux/goodsSlice'
-import { getValidFilters } from '../../util'
+import { debounce, getValidFilters } from '../../util'
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const [openChoice, setOpenChoice] = useState(null)
+  const [openChoice, setOpenChoice] = useState(null);
+
   const [filters, setfilters] = useState({
     type: "bouquets",
     minPrice: "",
@@ -15,27 +16,43 @@ export const Filter = () => {
     category: "",
   })
 
+  const prevFiltersRef = useRef({});
+
+  const debouncedFetchGoods = useRef(debounce((filters) => {
+    dispatch(fetchGoods(filters))
+  }, 500)).current;
+
+  useEffect(() => {
+    const prevFliters = prevFiltersRef.current;
+    const validFilter = getValidFilters(filters);
+    if (prevFliters.type !== filters.type) {
+      dispatch(fetchGoods(validFilter));
+    }else {
+      debouncedFetchGoods(filters)
+    }
+
+    prevFiltersRef.current = filters;
+
+  }, [dispatch, debouncedFetchGoods, filters])
+
+
   const handleChoicesToggle = (index) => {
     setOpenChoice( openChoice === index ? null : index )
   }
 
   const handleTypeChange = ({target}) => {
+  setOpenChoice( !openChoice);
     const {value} = target;
+    console.log('value: ', value);
     const newFilters = {...filters, type: value, minPrice: "", maxPrice: "",}
     setfilters(newFilters)
   }
   
   const handlePriceChange = ({target}) => {
     const {name, value} = target;
-    console.log('name: ', name);
-    const newFilters = {...filters, [name]: value ? parseInt(value, 10) : ""}
+    const newFilters = {...filters, [name]: !isNaN(parseInt(value, 10)) ? value : ""}
     setfilters(newFilters)
   }
-
-  useEffect(() => {
-    const validFilret = getValidFilters(filters);
-    dispatch(fetchGoods(validFilret))
-  }, [dispatch, filters])
 
   return (
   <section className="filter">
