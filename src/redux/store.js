@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import  orderReducer  from "./orderSlice";
 import  goodsReducer  from "./goodsSlice";
+import filtersReducer from "./filtersSlice";
 // console.log('orderReducer: ', orderReducer);
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
     cart: cartReducer,
     order: orderReducer,
     goods: goodsReducer,
+    filters: filtersReducer,
   }
 })
 
