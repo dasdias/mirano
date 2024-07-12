@@ -13,7 +13,7 @@ export const Goods = ({title}) => {
     content = <p>Loading...</p>
     
   }
-  if (goodsStatus === 'successed') {
+  if (goodsStatus === 'successed' && goods.length) {
     content = (
       <ul className="goods__list">
         {goods.map((item) => (
@@ -30,6 +30,10 @@ export const Goods = ({title}) => {
         ))}
       </ul>
     )
+  }
+
+  if (!goods.length) {
+    content = <p>По вашему запросу ничего не найдено</p>
   }
 
   if (goodsStatus === 'failed') {
