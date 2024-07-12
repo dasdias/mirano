@@ -1,10 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './cart.scss'
-// import {goodsArrayCart} from './goodsArrayCart'
 import { toggleCart } from '../../redux/cartSlice';
 import { openModal } from '../../redux/orderSlice';
-import { CartItem } from '../CartItem/CartItem';
 import { useEffect, useRef } from 'react';
+import { CartItem } from '../CartItem/CartItem';
 
 export const Cart = () => {
   const dispatch = useDispatch();
