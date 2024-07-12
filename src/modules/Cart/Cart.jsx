@@ -5,6 +5,8 @@ import { openModal } from '../../redux/orderSlice';
 import { useEffect, useRef } from 'react';
 import { CartItem } from '../CartItem/CartItem';
 
+
+
 export const Cart = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.cart.isOpen )
