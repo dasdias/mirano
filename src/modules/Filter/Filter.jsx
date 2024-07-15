@@ -29,9 +29,14 @@ export const Filter = ({settitleGoods}) => {
   useEffect(() => {
     const prevFliters = prevFiltersRef.current;
     const validFilter = getValidFilters(filters);
-    if (prevFliters.type !== filters.type) {
+
+    if (!validFilter.type) {
+      return;
+    }
+
+    if (prevFliters.type !== validFilter.type) {
       dispatch(fetchGoods(validFilter));
-      settitleGoods(filterTypes.find((typeTitle) => filters.type === typeTitle.value).title)
+      settitleGoods(filterTypes.find((typeTitle) => validFilter.type === typeTitle.value).title)
     }else {
       debouncedFetchGoods(validFilter)
     }

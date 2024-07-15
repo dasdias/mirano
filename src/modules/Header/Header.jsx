@@ -3,6 +3,7 @@ import './header.scss'
 import { toggleCart } from '../../redux/cartSlice';
 import { useState } from 'react';
 import { fetchGoods } from '../../redux/goodsSlice';
+import { changeType } from '../../redux/filtersSlice';
 
 export const Header = ({settitleGoods}) => {
   const items = useSelector(state => state.cart.items)
@@ -19,6 +20,8 @@ export const Header = ({settitleGoods}) => {
     e.preventDefault();
     dispatch(fetchGoods({search: searchValue}))
     settitleGoods('Результат поиска');
+    dispatch(changeType(''));
+    setSearchValue(''); // очищаем инпут после отправки запроса поиска
   }
 
   return (

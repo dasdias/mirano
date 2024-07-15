@@ -9,7 +9,7 @@ export const Card = ({img, id, title, dateDelivery, price}) => {
   const [buttonText, setButtonText] = useState(`${price}\u00A0₽`)
 
   const handlerAddToCart = () => {
-    dispanth(addItemToCart({img, id, title, dateDelivery, price}))
+    dispanth(addItemToCart({productId: id, quantity: 1}))
   }
   const handleMouseEnter = () => {
     setButtonText('в корзину')

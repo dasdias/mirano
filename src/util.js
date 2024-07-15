@@ -25,3 +25,6 @@ export const debounce =(fn, msec) => {
     }, msec)
   }
 }
+
+// проверка на число
+export const isNumber = (n) => !isNaN(parseInt(n) && isFinite(n))
