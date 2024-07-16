@@ -8,14 +8,14 @@ import { FilterRadio } from './FilterRadio'
 import { changePrice, changeType } from '../../redux/filtersSlice'
 
 const filterTypes = [
-  {value: "bouquets", title: 'Цветы'},
-  {value: "toys", title: 'Игрушки'},
-  {value: "postcards", title: 'Открытки'},
+  { value: "bouquets", title: 'Цветы' },
+  { value: "toys", title: 'Игрушки' },
+  { value: "postcards", title: 'Открытки' },
 ];
 
 
 
-export const Filter = ({settitleGoods}) => {
+export const Filter = ({ settitleGoods, filterRef }) => {
   const dispatch = useDispatch();
   const [openChoice, setOpenChoice] = useState(null);
   const filters = useSelector(state => state.filters)
@@ -37,7 +37,7 @@ export const Filter = ({settitleGoods}) => {
     if (prevFliters.type !== validFilter.type) {
       dispatch(fetchGoods(validFilter));
       settitleGoods(filterTypes.find((typeTitle) => validFilter.type === typeTitle.value).title)
-    }else {
+    } else {
       debouncedFetchGoods(validFilter)
     }
 
@@ -47,28 +47,28 @@ export const Filter = ({settitleGoods}) => {
 
 
   const handleChoicesToggle = (index) => {
-    setOpenChoice( openChoice === index ? null : index )
+    setOpenChoice(openChoice === index ? null : index)
   }
 
-  const handleTypeChange = ({target}) => {
-    const {value} = target;
+  const handleTypeChange = ({ target }) => {
+    const { value } = target;
     dispatch(changeType(value))
-    setOpenChoice( -1);
+    setOpenChoice(-1);
   }
-  
-  const handlePriceChange = ({target}) => {
-    const {name, value} = target;
+
+  const handlePriceChange = ({ target }) => {
+    const { name, value } = target;
     // const newFilters = {...filters, [name]: !isNaN(parseInt(value, 10)) ? value : ""}
     // setfilters(newFilters)
-    dispatch(changePrice({name, value}))
+    dispatch(changePrice({ name, value }))
   }
 
   return (
-  <section className="filter">
-    <h2 className="visually-hidden"></h2>
-    <div className="container">
-      <form className="filter__form">
-        <fieldset className="filter__group">
+    <section className="filter" ref={filterRef} >
+      <h2 className="visually-hidden"></h2>
+      <div className="container">
+        <form className="filter__form">
+          <fieldset className="filter__group">
             {filterTypes.map(item => {
               return (
                 <FilterRadio
@@ -79,12 +79,12 @@ export const Filter = ({settitleGoods}) => {
                 />
               )
             })}
-        </fieldset>
+          </fieldset>
 
-        <fieldset className="filter__group filter__group_choices">
-          <Choices bottonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>
+          <fieldset className="filter__group filter__group_choices">
+            <Choices bottonLabel="Цена" isOpen={openChoice === 0} onToggle={() => handleChoicesToggle(0)}>
               <fieldset className="filter__price">
-                <input 
+                <input
                   className="filter__input-price"
                   type="text"
                   name="minPrice"
@@ -92,7 +92,7 @@ export const Filter = ({settitleGoods}) => {
                   value={filters.minPrice}
                   onChange={handlePriceChange}
                 />
-                <input 
+                <input
                   className="filter__input-price"
                   type="text"
                   name="maxPrice"
@@ -101,9 +101,9 @@ export const Filter = ({settitleGoods}) => {
                   onChange={handlePriceChange}
                 />
               </fieldset>
-          </Choices>
+            </Choices>
 
-          <Choices bottonLabel="Тип товара" isOpen={openChoice === 1} onToggle={() => handleChoicesToggle(1)}>
+            <Choices bottonLabel="Тип товара" isOpen={openChoice === 1} onToggle={() => handleChoicesToggle(1)}>
               <ul className="filter__type-list">
                 <li className="filter__type-item">
                   <button className="filter__type-button"
@@ -126,9 +126,10 @@ export const Filter = ({settitleGoods}) => {
                     сухоцветов</button>
                 </li>
               </ul>
-          </Choices>
-        </fieldset>
-      </form>
-    </div>
-  </section>
-)}
+            </Choices>
+          </fieldset>
+        </form>
+      </div>
+    </section>
+  )
+}

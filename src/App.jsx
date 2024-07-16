@@ -6,12 +6,20 @@ import { Header } from "./modules/Header/Header"
 import { Order } from "./modules/Order/Order"
 import { Subscribe } from "./modules/Subscribe/Subscribe"
 import { useDispatch } from "react-redux"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { fetchCart, registerCart } from "./redux/cartSlice"
 
 export const App = () => {
   const dispatch = useDispatch();
   const [titleGoods, settitleGoods] = useState('');
+
+  const filterRef = useRef(null);
+
+  const scrollToFilter = () => {
+    if (filterRef.current) {
+      filterRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -23,24 +31,24 @@ export const App = () => {
 
   return (
     <>
-      <Header settitleGoods={settitleGoods}/>
+      <Header settitleGoods={settitleGoods} scrollToFilter={scrollToFilter} />
 
       <main>
-      
-        <Hero/>
 
-        <Filter settitleGoods={settitleGoods}/>
+        <Hero />
+
+        <Filter settitleGoods={settitleGoods} filterRef={filterRef} />
 
         <Goods title={titleGoods} />
 
-        <Subscribe/>
+        <Subscribe />
       </main>
-      
-      <Footer/>
 
-      <Order/>
+      <Footer />
 
-      
+      <Order />
+
+
     </>
   )
 }
