@@ -18,22 +18,22 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
     credentials: 'include',
   });
   if (!response.ok) {
-    throw new Error('Не удалось получить данные корзины' );
+    throw new Error('Не удалось получить данные корзины');
   }
   return await response.json();
 });
 
-export const addItemToCart = createAsyncThunk('cart/addItemToCart', async ({productId, quantity}) => {
+export const addItemToCart = createAsyncThunk('cart/addItemToCart', async ({ productId, quantity }) => {
   const response = await fetch(`${API_URL}/api/cart/items`, {
     method: 'POST',
     credentials: 'include',
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({productId, quantity})
+    body: JSON.stringify({ productId, quantity })
   });
   if (!response.ok) {
-    throw new Error('Не удалось отправить товар в корзину' );
+    throw new Error('Не удалось отправить товар в корзину');
   }
   return await response.json();
 });
@@ -64,28 +64,28 @@ const cartSlice = createSlice({
       state.status = 'failed';
       state.accesskey = '';
       state.accesskey = action.error.message;
-    })    
-    .addCase(fetchCart.pending, (state) => {
-      state.status = 'loading';
-    }).addCase(fetchCart.fulfilled, (state, action) => {
-      console.log('action.payload: ', action);
-      state.status = 'success';
-      state.items = action.payload;
-    }).addCase(fetchCart.rejected, (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
     })
-    .addCase(addItemToCart.pending, (state) => {
-      state.status = 'loading';
-    }).addCase(addItemToCart.fulfilled, (state, action) => {
-      state.status = 'success';
-      state.items = action.payload;
-    }).addCase(addItemToCart.rejected, (state, action) => {
-      state.status = 'failed';
-      state.error = action.error.message;
-    })
+      .addCase(fetchCart.pending, (state) => {
+        state.status = 'loading';
+      }).addCase(fetchCart.fulfilled, (state, action) => {
+        // console.log('action.payload: ', action);
+        state.status = 'success';
+        state.items = action.payload;
+      }).addCase(fetchCart.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(addItemToCart.pending, (state) => {
+        state.status = 'loading';
+      }).addCase(addItemToCart.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.items = action.payload;
+      }).addCase(addItemToCart.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
   }
 })
-export const {toggleCart} = cartSlice.actions;
+export const { toggleCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

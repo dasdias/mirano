@@ -15,8 +15,8 @@ export const App = () => {
 
   const filterRef = useRef(null);
 
-  const scrollToFilter = () => {
-    if (filterRef.current) {
+  const scrollToFilter = (searchValue) => {
+    if (filterRef.current && searchValue.length) {
       filterRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }

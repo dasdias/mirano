@@ -22,7 +22,7 @@ export const Header = ({ settitleGoods, scrollToFilter }) => {
     settitleGoods('Результат поиска');
     dispatch(changeType(''));
     setSearchValue(''); // очищаем инпут после отправки запроса поиска
-    scrollToFilter();
+    scrollToFilter(searchValue);
   }
 
   return (
