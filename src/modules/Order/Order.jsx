@@ -1,17 +1,32 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './order.scss';
-import { closeModal } from '../../redux/orderSlice';
+import { closeModal, sendOrder, updateOrderData } from '../../redux/orderSlice';
 import { useCallback, useEffect } from 'react';
 
 export const Order = () => {
   const dispatch = useDispatch();
-  const isOrderReady = false;
-  const isOpen = useSelector((state) => state.order.isOpen )
+  // const isOrderReady = false;
+  const isOpen = useSelector((state) => state.order.isOpen)
+  const orderId = useSelector((state) => state.order.orderId)
+  const orderData = useSelector((state) => state.order.data)
+  const itemsCart = useSelector((state) => state.cart.items)
 
 
   const handlerClose = useCallback(() => {
     dispatch(closeModal())
-  },[dispatch])
+  }, [dispatch])
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(updateOrderData({
+      [name]: value,
+    }));
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(sendOrder())
+  }
 
   useEffect(() => {
     const handleEsc = (e) => {
@@ -32,52 +47,52 @@ export const Order = () => {
 
   if (!isOpen) return null
 
-    return (
+  return (
     <div className="order" onClick={handlerClose}>
-        <div className="order__wrapper" onClick={(e) => e.stopPropagation()}>
-          {isOrderReady ? (
+      <div className="order__wrapper" onClick={(e) => e.stopPropagation()}>
+        {orderId ? (
 
-            <>
+          <>
             <h2 className="order__title">Заказ оформлен!</h2>
-            <p className="order__id">Ваш номер заказа: 971f365a-caa1-4cdb-9446-bad2eff047e1</p>
+            <p className="order__id">Ваш номер заказа: {orderId}</p>
           </>
-          ) : (
+        ) : (
           <>
             <h2 className="order__title">Оформить заказ</h2>
-            <form className="order__form" id="order">
+            <form className="order__form" id="order" onSubmit={handleSubmit}>
               <fieldset className="order__fieldset">
                 <legend className="order__legend">Данные заказчика</legend>
                 <div className="order__input-group">
-                  <input className="order__input" type="text" name="name-buyer" placeholder="Имя" />
-                  <input className="order__input" type="text" name="phone-buyer" placeholder="Телефон" />
+                  <input className="order__input" type="text" name="buyerName" placeholder="Имя" value={orderData.buyerName} onChange={handleChange} required />
+                  <input className="order__input" type="text" name="buyerPhone" placeholder="Телефон" value={orderData.buyerPhone} onChange={handleChange} required />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <legend className="order__legend">Данные получателя</legend>
                 <div className="order__input-group">
-                  <input className="order__input" type="text" name="name-recipient" placeholder="Имя" />
-                  <input className="order__input" type="text" name="phone-recipient" placeholder="Телефон" />
+                  <input className="order__input" type="text" name="recipientName" placeholder="Имя" value={orderData.recipientName} onChange={handleChange} required />
+                  <input className="order__input" type="text" name="recipientPhone" placeholder="Телефон" value={orderData.recipientPhone} onChange={handleChange} required />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <legend className="order__legend">Адрес</legend>
                 <div className="order__input-group">
-                  <input className="order__input" type="text" name="street" placeholder="Улица" />
-                  <input className="order__input order__input_min" type="text" name="house" placeholder="Дом" />
-                  <input className="order__input order__input_min" type="text" name="apartment" placeholder="Квартира" />
+                  <input className="order__input" type="text" name="street" placeholder="Улица" value={orderData.street} onChange={handleChange} required />
+                  <input className="order__input order__input_min" type="text" name="house" placeholder="Дом" value={orderData.house} onChange={handleChange} required />
+                  <input className="order__input order__input_min" type="text" name="apartment" placeholder="Квартира" value={orderData.apartment} onChange={handleChange} required />
                 </div>
               </fieldset>
               <fieldset className="order__fieldset">
                 <div className="order__payment">
                   <label className="order__label-radio">
-                    <input className="order__radio" type="radio" name="payment-online" value="true" defaultChecked />Оплата онлайн
+                    <input className="order__radio" type="radio" name="paymentOnline" defaultChecked value={orderData.paymentOnline === "true"} onChange={handleChange} />Оплата онлайн
                   </label>
                 </div>
                 <div className="order__delivery">
-                  <label htmlFor="delivery">Доставка 01.07</label>
-                  <input type="hidden" name="delivery-date" value="01.07" />
+                  <label htmlFor="delivery">Дата доставки</label>
+                  <input className="order__input" type="date" name="deliveryDate" value={orderData.deliveryDate} onChange={handleChange} required />
                   <div className="order__select-wrapper">
-                    <select className="order__select" name="delivery-time" id="delivery">
+                    <select className="order__select" name="deliveryTime" id="delivery" value={orderData.deliveryTime} onChange={handleChange} required >
                       <option value="9-12">с 9:00 до 12:00</option>
                       <option value="12-15">с 12:00 до 15:00</option>
                       <option value="15-18">с 15:00 до 18:00</option>
@@ -88,12 +103,12 @@ export const Order = () => {
               </fieldset>
             </form>
             <div className="order__footer">
-              <p className="order__total">92100&nbsp;₽</p><button className="order__button" type="submit" form="order">Заказать</button>
+              <p className="order__total">{itemsCart.reduce((acc, item) => acc + item.price * item.quantity, 0)}&nbsp;₽</p><button className="order__button" type="submit" form="order">Заказать</button>
             </div>
           </>
-          )}
-        </div>
-        <button className="order__close" type="button" onClick={handlerClose}>×</button>
+        )}
       </div>
-    )
+      <button className="order__close" type="button" onClick={handlerClose}>×</button>
+    </div>
+  )
 }
