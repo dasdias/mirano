@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { isNumber } from '../util';
+import { isNumber } from '../../util';
 
 const initialState = {
   type: "bouquets",

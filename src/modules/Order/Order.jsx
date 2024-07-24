@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './order.scss';
-import { closeModal, sendOrder, updateOrderData } from '../../redux/orderSlice';
+import { closeModal, updateOrderData } from '../../redux/slices/orderSlice';
 import { useCallback, useEffect } from 'react';
+import { sendOrder } from '../../redux/thunks/sendOrder';
 
 export const Order = () => {
   const dispatch = useDispatch();

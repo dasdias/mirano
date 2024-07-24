@@ -1,42 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { API_URL } from "../const";
-
-export const registerCart = createAsyncThunk('cart/registerCart', async () => {
-  const response = await fetch(`${API_URL}/api/cart/register`, {
-    method: 'POST',
-    credentials: 'include',
-  });
-  if (!response.ok) {
-    throw new Error('Не удалось зарегистрировать корзину');
-  }
-
-  return await response.json();
-});
-
-export const fetchCart = createAsyncThunk('cart/fetchCart', async () => {
-  const response = await fetch(`${API_URL}/api/cart`, {
-    credentials: 'include',
-  });
-  if (!response.ok) {
-    throw new Error('Не удалось получить данные корзины');
-  }
-  return await response.json();
-});
-
-export const addItemToCart = createAsyncThunk('cart/addItemToCart', async ({ productId, quantity }) => {
-  const response = await fetch(`${API_URL}/api/cart/items`, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ productId, quantity })
-  });
-  if (!response.ok) {
-    throw new Error('Не удалось отправить товар в корзину');
-  }
-  return await response.json();
-});
+import { createSlice } from "@reduxjs/toolkit"
+import { registerCart } from "../thunks/registerCart";
+import { fetchCart } from "../thunks/fetchCart";
+import { addItemToCart } from "../thunks/addItemToCart";
 
 const initialState = {
   isOpen: false,

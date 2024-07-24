@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './cart.scss'
-import { toggleCart } from '../../redux/cartSlice';
-import { openModal } from '../../redux/orderSlice';
+import { toggleCart } from '../../redux/slices/cartSlice';
+import { openModal } from '../../redux/slices/orderSlice';
 import { useEffect, useRef } from 'react';
 import { CartItem } from '../CartItem/CartItem';
 

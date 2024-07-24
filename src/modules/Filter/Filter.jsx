@@ -2,10 +2,10 @@ import './filter.scss'
 import { Choices } from '../Choices/Choices'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchGoods } from '../../redux/goodsSlice'
+import { fetchGoods } from '../../redux/thunks/fetchGoods'
 import { debounce, getValidFilters } from '../../util'
 import { FilterRadio } from './FilterRadio'
-import { changeCategory, changePrice, changeType } from '../../redux/filtersSlice'
+import { changeCategory, changePrice, changeType } from '../../redux/slices/filtersSlice'
 import classNames from 'classnames'
 
 const filterTypes = [

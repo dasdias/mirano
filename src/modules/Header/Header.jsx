@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import './header.scss'
-import { toggleCart } from '../../redux/cartSlice';
+import { toggleCart } from '../../redux/slices/cartSlice';
 import { useState } from 'react';
-import { fetchGoods } from '../../redux/goodsSlice';
-import { changeType } from '../../redux/filtersSlice';
+import { fetchGoods } from '../../redux/thunks/fetchGoods';
+import { changeType } from '../../redux/slices/filtersSlice';
 
 export const Header = ({ settitleGoods, scrollToFilter }) => {
   const cartItems = useSelector(state => state.cart.items)

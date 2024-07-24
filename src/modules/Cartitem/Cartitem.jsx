@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { API_URL } from "../../const";
 import { useState } from "react";
-import { addItemToCart } from "../../redux/cartSlice";
+import { addItemToCart } from "../../redux/thunks/addItemToCart";
 import { debounce } from "../../util";
 
 export const CartItem = ({ id, photoUrl, price, name, quantity }) => {

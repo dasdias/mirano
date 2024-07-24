@@ -7,7 +7,8 @@ import { Order } from "./modules/Order/Order"
 import { Subscribe } from "./modules/Subscribe/Subscribe"
 import { useDispatch } from "react-redux"
 import { useEffect, useRef, useState } from "react"
-import { fetchCart, registerCart } from "./redux/cartSlice"
+import { fetchCart } from "./redux/thunks/fetchCart"
+import { registerCart } from "./redux/thunks/registerCart"
 
 export const App = () => {
   const dispatch = useDispatch();
