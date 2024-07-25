@@ -22,27 +22,27 @@ export const sendOrder = createAsyncThunk("order/sendOrder", async (_, { getStat
     } } = getState();
 
     const orderData = {
-      "buyer": {
-        "name": buyerName,
-        "phone": buyerPhone,
+      buyer: {
+        name: buyerName,
+        phone: buyerPhone,
       },
-      "recipient": {
-        "name": recipientName,
-        "phone": recipientPhone,
+      recipient: {
+        name: recipientName,
+        phone: recipientPhone,
       },
-      "address": `${street}, ${house}, ${apartment}`,
+      address: `${street}, ${house}, ${apartment}`,
       paymentOnline,
       deliveryDate,
       deliveryTime,
-    }
+    };
 
     const response = await fetch(`${API_URL}/api/orders`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ orderData })
+      credentials: 'include',
+      body: JSON.stringify(orderData)
     });
     if (!response.ok) {
       throw new Error('Не удалось оформить заказ!');

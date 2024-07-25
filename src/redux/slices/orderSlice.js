@@ -29,6 +29,7 @@ const orderSlice = createSlice({
     },
     closeModal(state) {
       state.isOpen = false;
+      // state.orderId = '';
     },
     clearOrder(state) {
       state.data = {
