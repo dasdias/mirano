@@ -38,7 +38,7 @@ const cartSlice = createSlice({
         state.items = action.payload;
       }).addCase(fetchCart.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
       .addCase(addItemToCart.pending, (state) => {
         state.status = 'loading';
@@ -47,7 +47,7 @@ const cartSlice = createSlice({
         state.items = action.payload;
       }).addCase(addItemToCart.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
   }
 })

@@ -6,7 +6,7 @@ import { Header } from "./modules/Header/Header"
 import { Order } from "./modules/Order/Order"
 import { Subscribe } from "./modules/Subscribe/Subscribe"
 import { useDispatch } from "react-redux"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { fetchCart } from "./redux/thunks/fetchCart"
 import { registerCart } from "./redux/thunks/registerCart"
 
@@ -14,13 +14,13 @@ export const App = () => {
   const dispatch = useDispatch();
   const [titleGoods, settitleGoods] = useState('');
 
-  const filterRef = useRef(null);
+  // const filterRef = useRef(null);
 
-  const scrollToFilter = (searchValue) => {
-    if (filterRef.current && searchValue.length) {
-      filterRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }
+  // const scrollToFilter = (searchValue) => {
+  //   if (filterRef.current && searchValue.length) {
+  //     filterRef.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }
 
   useEffect(() => {
     const initializeCart = async () => {
@@ -32,13 +32,13 @@ export const App = () => {
 
   return (
     <>
-      <Header settitleGoods={settitleGoods} scrollToFilter={scrollToFilter} />
+      <Header />
 
       <main>
 
         <Hero />
 
-        <Filter settitleGoods={settitleGoods} filterRef={filterRef} />
+        <Filter settitleGoods={settitleGoods} />
 
         <Goods title={titleGoods} />
 

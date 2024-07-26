@@ -1,16 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
 import './header.scss'
 import { toggleCart } from '../../redux/slices/cartSlice';
-import { useState } from 'react';
-import { fetchGoods } from '../../redux/thunks/fetchGoods';
-import { changeType } from '../../redux/slices/filtersSlice';
+import { useRef, useState } from 'react';
+// import { fetchGoods } from '../../redux/thunks/fetchGoods';
+import { changeSearch } from '../../redux/slices/filtersSlice';
 
-export const Header = ({ settitleGoods, scrollToFilter }) => {
+export const Header = () => {
   const cartItems = useSelector(state => state.cart.items)
 
   const dispatch = useDispatch();
 
+
   const [searchValue, setSearchValue] = useState("");
+  const searchInputRef = useRef(null);
 
   const handlerCartToggle = () => {
     dispatch(toggleCart())
@@ -18,11 +20,22 @@ export const Header = ({ settitleGoods, scrollToFilter }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchGoods({ search: searchValue }))
-    settitleGoods('Результат поиска');
-    dispatch(changeType(''));
-    setSearchValue(''); // очищаем инпут после отправки запроса поиска
-    scrollToFilter(searchValue);
+    // dispatch(fetchGoods({ search: searchValue }))
+    // dispatch(changeType(''));
+    if (searchValue.trim() !== "") {
+      searchInputRef.current.style.cssText = "";
+      dispatch(changeSearch(searchValue));
+      setSearchValue(''); // очищаем инпут после отправки запроса поиска
+    } else {
+      searchInputRef.current.style.cssText = `
+        outline: 2px solid tomato;
+        ooutlineOffset: 3px;
+      `
+      setTimeout(() => {
+        searchInputRef.current.style.cssText = "";
+      }, 2000)
+    }
+    // scrollToFilter(searchValue);
   }
 
   return (
@@ -35,6 +48,7 @@ export const Header = ({ settitleGoods, scrollToFilter }) => {
             placeholder="Букет из роз"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
+            ref={searchInputRef}
           />
 
           <button className="header__search-button" aria-label="начать поиск">
